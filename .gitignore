@@ -1,1 +1,5 @@
 *.zip
+server-with-mysql2-ts.md
+node_modules/
+.env
+dist/
