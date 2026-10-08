@@ -5,5 +5,7 @@ const productController = new ProductController();
 const router = Router();
 
 router.get("/getAll", productController.getAll);
+router.get("/getById/:id", productController.getById);
+
 
 export default router;
