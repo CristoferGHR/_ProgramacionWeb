@@ -36,3 +36,28 @@ Content-Type: application/json
   "description": "No se debe crear."
 }
 
+### 7. Actualizar producto completo
+PUT {{baseUrl}}/update/6
+Content-Type: application/json
+
+{
+  "name": "Teclado Inalambrico Pro",
+  "price": 749.50,
+  "stock": 20,
+  "description": "Teclado inalambrico compacto con teclas silenciosas.",
+  "brand": "Keycraft",
+  "img": "teclado-inalambrico-pro.jpg"
+}
+
+### 8. Actualizar producto inexistente
+PUT {{baseUrl}}/update/99999
+Content-Type: application/json
+
+{
+  "name": "No existe",
+  "price": 100,
+  "stock": 1,
+  "description": "No se debe actualizar."
+}
+
+

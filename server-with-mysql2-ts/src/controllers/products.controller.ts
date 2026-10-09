@@ -56,4 +56,31 @@ export class ProductController {
       res.status(500).json({ message: "internal server error" });
     }
   }
+
+    public async update(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+      if (!isValidId(id)) {
+        res.status(400).json({ message: "invalid id" });
+        return;
+      }
+      const { name, price, stock, description, brand, img } = req.body ?? {};
+      if (!name || !description || !Number.isInteger(stock) || !isValidPrice(price)) {
+        res.status(400).json({ message: "invalid product data" });
+        return;
+      }
+      const [result] = await pool.execute<ResultSetHeader>(
+        "update products set name = ?, price = ?, stock = ?, description = ?, brand = ?, img = ? where id = ? and active = TRUE",
+        [name, price, stock, description, brand ?? null, img ?? null, id],
+      );
+      if (result.affectedRows === 0) {
+        res.status(404).json({ message: "product not found" });
+        return;
+      }
+      res.json({ message: "product updated" });
+    } catch {
+      res.status(500).json({ message: "internal server error" });
+    }
+  }
+
 }
