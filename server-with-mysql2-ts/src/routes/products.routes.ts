@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/getAll", productController.getAll);
 router.get("/getById/:id", productController.getById);
+router.post("/create", productController.create);
 
 
 export default router;

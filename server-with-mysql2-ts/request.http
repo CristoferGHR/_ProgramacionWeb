@@ -1,0 +1,38 @@
+@baseUrl = http://localhost:3000/api/v1/products
+
+### 1. Consulta general
+GET {{baseUrl}}/getAll
+
+### 2. Consulta por ID de un producto activo
+GET {{baseUrl}}/getById/1
+
+### 3. ID inexistente
+GET {{baseUrl}}/getById/99999
+
+### 4. ID inválido
+GET {{baseUrl}}/getById/abc
+
+### 5. Crear producto
+POST {{baseUrl}}/create
+Content-Type: application/json
+
+{
+  "name": "Teclado Inalambrico",
+  "price": 599.99,
+  "stock": 15,
+  "description": "Teclado inalambrico compacto.",
+  "brand": "Keycraft",
+  "img": "teclado-inalambrico.jpg"
+}
+
+### 6. Crear con datos inválidos (precio negativo)
+POST {{baseUrl}}/create
+Content-Type: application/json
+
+{
+  "name": "Producto malo",
+  "price": -10,
+  "stock": 5,
+  "description": "No se debe crear."
+}
+

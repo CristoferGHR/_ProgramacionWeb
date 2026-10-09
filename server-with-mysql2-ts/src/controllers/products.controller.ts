@@ -1,8 +1,11 @@
 import type { Request, Response } from "express";
-import type { RowDataPacket } from "mysql2";
+import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import { pool } from "../conf/dbConnection.ts";
 
 const isValidId = (id: number) => Number.isInteger(id) && id > 0; 
+const isValidPrice = (price: unknown) =>
+  typeof price === "number" && Number.isFinite(price) && price > 0;
+
 
 export class ProductController {
   public async getAll(_req: Request, res: Response) {
@@ -37,4 +40,20 @@ export class ProductController {
     }
   }
 
+  public async create(req: Request, res: Response) {
+    try {
+      const { name, price, stock, description, brand, img } = req.body ?? {};
+      if (!name || !description || !Number.isInteger(stock) || !isValidPrice(price)) {
+        res.status(400).json({ message: "invalid product data" });
+        return;
+      }
+      const [result] = await pool.execute<ResultSetHeader>(
+        "insert into products (name, price, stock, description, brand, img) values (?, ?, ?, ?, ?, ?)",
+        [name, price, stock, description, brand ?? null, img ?? null],
+      );
+      res.status(201).json({ message: "product created", id: result.insertId });
+    } catch {
+      res.status(500).json({ message: "internal server error" });
+    }
+  }
 }
