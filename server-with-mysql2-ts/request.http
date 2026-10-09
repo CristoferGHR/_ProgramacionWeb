@@ -60,4 +60,41 @@ Content-Type: application/json
   "description": "No se debe actualizar."
 }
 
+### 9. Cambiar precio
+PATCH {{baseUrl}}/change-price/6
+Content-Type: application/json
+
+{
+  "price": 699.00
+}
+
+### 10. Cambiar precio inválido
+PATCH {{baseUrl}}/change-price/6
+Content-Type: application/json
+
+{
+  "price": 0
+}
+
+### 11. Cambiar precio con campos de más
+PATCH {{baseUrl}}/change-price/6
+Content-Type: application/json
+
+{
+  "price": 500,
+  "name": "No permitido"
+}
+
+### 12. Baja lógica del producto
+DELETE {{baseUrl}}/delete/6
+
+### 13. Comprobar que ya no aparece en getAll
+GET {{baseUrl}}/getAll
+
+### 14. Comprobar que ya no aparece en getById
+GET {{baseUrl}}/getById/6
+
+### 15. Dar de baja otra vez (ya inactivo)
+DELETE {{baseUrl}}/delete/6
+
 

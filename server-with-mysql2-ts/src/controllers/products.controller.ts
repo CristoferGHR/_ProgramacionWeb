@@ -83,4 +83,51 @@ export class ProductController {
     }
   }
 
+    public async changePrice(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+      if (!isValidId(id)) {
+        res.status(400).json({ message: "invalid id" });
+        return;
+      }
+      const body = req.body ?? {};
+      if (Object.keys(body).length !== 1 || !isValidPrice(body.price)) {
+        res.status(400).json({ message: "body must contain only a valid price" });
+        return;
+      }
+      const [result] = await pool.execute<ResultSetHeader>(
+        "update products set price = ? where id = ? and active = TRUE",
+        [body.price, id],
+      );
+      if (result.affectedRows === 0) {
+        res.status(404).json({ message: "product not found" });
+        return;
+      }
+      res.json({ message: "price updated" });
+    } catch {
+      res.status(500).json({ message: "internal server error" });
+    }
+  }
+
+    public async delete(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+      if (!isValidId(id)) {
+        res.status(400).json({ message: "invalid id" });
+        return;
+      }
+      const [result] = await pool.execute<ResultSetHeader>(
+        "update products set active = FALSE where id = ? and active = TRUE",
+        [id],
+      );
+      if (result.affectedRows === 0) {
+        res.status(404).json({ message: "product not found" });
+        return;
+      }
+      res.json({ message: "product deleted" });
+    } catch {
+      res.status(500).json({ message: "internal server error" });
+    }
+  }
+
 }
