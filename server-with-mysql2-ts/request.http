@@ -1,7 +1,9 @@
 @baseUrl = http://localhost:3000/api/v1/products
+@productId = {{createProduct.response.body.id}}
 
 ### 1. Consulta general
 GET {{baseUrl}}/getAll
+
 
 ### 2. Consulta por ID de un producto activo
 GET {{baseUrl}}/getById/1
@@ -13,6 +15,7 @@ GET {{baseUrl}}/getById/99999
 GET {{baseUrl}}/getById/abc
 
 ### 5. Crear producto
+# @name createProduct
 POST {{baseUrl}}/create
 Content-Type: application/json
 
@@ -37,7 +40,7 @@ Content-Type: application/json
 }
 
 ### 7. Actualizar producto completo
-PUT {{baseUrl}}/update/6
+PUT {{baseUrl}}/update/{{productId}}
 Content-Type: application/json
 
 {
@@ -61,7 +64,7 @@ Content-Type: application/json
 }
 
 ### 9. Cambiar precio
-PATCH {{baseUrl}}/change-price/6
+PATCH {{baseUrl}}/change-price/{{productId}}
 Content-Type: application/json
 
 {
@@ -69,7 +72,7 @@ Content-Type: application/json
 }
 
 ### 10. Cambiar precio inválido
-PATCH {{baseUrl}}/change-price/6
+PATCH {{baseUrl}}/change-price/{{productId}}
 Content-Type: application/json
 
 {
@@ -77,7 +80,7 @@ Content-Type: application/json
 }
 
 ### 11. Cambiar precio con campos de más
-PATCH {{baseUrl}}/change-price/6
+PATCH {{baseUrl}}/change-price/{{productId}}
 Content-Type: application/json
 
 {
@@ -86,15 +89,15 @@ Content-Type: application/json
 }
 
 ### 12. Baja lógica del producto
-DELETE {{baseUrl}}/delete/6
+DELETE {{baseUrl}}/delete/{{productId}}
 
 ### 13. Comprobar que ya no aparece en getAll
 GET {{baseUrl}}/getAll
 
 ### 14. Comprobar que ya no aparece en getById
-GET {{baseUrl}}/getById/6
+GET {{baseUrl}}/getById/{{productId}}
 
 ### 15. Dar de baja otra vez (ya inactivo)
-DELETE {{baseUrl}}/delete/6
+DELETE {{baseUrl}}/delete/{{productId}}
 
 

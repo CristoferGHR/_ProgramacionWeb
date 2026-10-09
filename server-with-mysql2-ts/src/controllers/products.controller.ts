@@ -77,7 +77,7 @@ export class ProductController {
         res.status(404).json({ message: "product not found" });
         return;
       }
-      res.json({ message: "product updated" });
+      res.json({ message: "product updated", id });
     } catch {
       res.status(500).json({ message: "internal server error" });
     }
@@ -103,7 +103,7 @@ export class ProductController {
         res.status(404).json({ message: "product not found" });
         return;
       }
-      res.json({ message: "price updated" });
+      res.json({ message: "price updated", id });
     } catch {
       res.status(500).json({ message: "internal server error" });
     }
@@ -124,7 +124,7 @@ export class ProductController {
         res.status(404).json({ message: "product not found" });
         return;
       }
-      res.json({ message: "product deleted" });
+      res.json({ message: "product deleted", id });
     } catch {
       res.status(500).json({ message: "internal server error" });
     }
